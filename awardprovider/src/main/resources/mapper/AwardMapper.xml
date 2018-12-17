@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jk.mapper.AwardMapper">
+    <resultMap id="AwardMap" type="com.jk.entity.AwardBean">
+        <id column="award_id" property="awardId"></id>
+        <result column="award_name" property="awardName"></result>
+        <result column="award_number" property="awardNumber"></result>
+    </resultMap>
+    <select id="queryAward" resultMap="AwardMap">
+        select award_id,award_name,award_number from t_award
+        limit #{startIndex},#{endIndex}
+    </select>
+    <select id="queryAwardCount" resultType="int">
+        select count(1) from t_award
+    </select>
+    <insert id="addAward" parameterType="com.jk.entity.AwardBean" >
+        insert into t_award (award_name,award_number) values (#{awardName},#{awardNumber})
+    </insert>
+    <delete id="deleteAward" parameterType="int">
+        delete from t_award where award_id=#{value}
+    </delete>
+    <update id="updateAward" parameterType="com.jk.entity.AwardBean">
+        update t_award set award_name=#{awardName},award_number=#{awardNumber}
+        where award_id=#{awardId}
+    </update>
+    <select id="queryAwardById" parameterType="int" resultMap="AwardMap">
+        select award_id,award_name,award_number from t_award where award_id=#{value}
+    </select>
+</mapper>
